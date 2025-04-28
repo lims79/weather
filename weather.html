@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>서울 날씨</title>
+  <style>
+    body {
+      background-color: white;
+      color: black;
+      font-size: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    #weather {
+      padding: 20px;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div id="weather">날씨 정보를 불러오는 중...</div>
+
+<script>
+  fetch("https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=68ad9198d30662f9321e61b8b0d1e1df&units=metric&lang=kr")
+    .then(response => response.json())
+    .then(data => {
+      const weather = data.weather[0].description;
+      const temp = data.main.temp;
+      document.getElementById("weather").innerHTML = `서울 현재 날씨: ${weather}, ${temp}℃`;
+    })
+    .catch(error => {
+      console.error("날씨 불러오기 오류:", error);
+      document.getElementById("weather").innerHTML = "날씨 정보를 불러올 수 없습니다.";
+    });
+</script>
+
+</body>
+</html>
